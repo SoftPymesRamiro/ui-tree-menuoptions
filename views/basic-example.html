@@ -1,0 +1,49 @@
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div ui-tree-handle class="tree-node tree-node-content">
+    <a class="btn btn-success btn-xs" ng-if="node.childs && node.childs.length > 0" data-nodrag ng-click="toggle(this)"><span
+        class="glyphicon"
+        ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+    {{node.name}}
+      <div  class="pull-right">
+      <input type="checkbox" ng-model="node.c">
+      <input type="checkbox" ng-model="node.r">
+      <input type="checkbox" ng-model="node.u">
+      <input type="checkbox" ng-model="node.d">
+          </div>
+    <!--<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+        class="glyphicon glyphicon-remove"></span></a>
+    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
+        class="glyphicon glyphicon-plus"></span></a>-->
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.childs" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.childs" ui-tree-node ng-include="'nodes_renderer.html'">
+    </li>
+  </ol>
+</script>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Basic Example</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div ui-tree id="tree-root">
+      <ol ui-tree-nodes ng-model="data">
+        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="info">
+      {{name}}
+    </div>
+    <pre class="code">{{ data | json }}</pre>
+  </div>
+</div>
